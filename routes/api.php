@@ -34,7 +34,10 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::delete('client/{id}', 'ClientController@delete');
         Route::put('client/{id}/profile', 'ClientController@upload');
 
-        
+        Route::get('category', 'CategoryController@list');
+        Route::post('category', 'CategoryController@store');
+        Route::put('category/{id}', 'CategoryController@update');
+        Route::delete('category/{id}', 'CategoryController@delete');
     });
   });
 
