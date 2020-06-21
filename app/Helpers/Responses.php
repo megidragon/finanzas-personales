@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use \Illuminate\Http\JsonResponse;
 /**
  * Trait para respuestas genericas.
  */
@@ -9,8 +10,10 @@ trait Responses {
 
     /**
      * Metodo de respuesta de almacenamiento correcto.
+     * 
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected function storeSuccess($row=null) {
+    protected function storeSuccess($row=null) : JsonResponse {
         $response = [
             'code' => 200,
             'message' => 'Se creo el registro correctamente.'
@@ -24,8 +27,9 @@ trait Responses {
 
     /**
      * Metodo de respuesta de almacenamiento correcto.
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected function deleteSuccess() {
+    protected function deleteSuccess() : JsonResponse {
         return response()->json([
             'code' => 200,
             'message' => 'Se elimino el registro correctamente.'
@@ -34,8 +38,9 @@ trait Responses {
 
     /**
      * Metodo de respuesta de almacenamiento correcto.
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected function updateSuccess($row=null) {
+    protected function updateSuccess($row=null) : JsonResponse{
         $response = [
             'code' => 200,
             'message' => 'Se actualizo el registro correctamente.'
@@ -49,8 +54,9 @@ trait Responses {
 
     /**
      * Metodo de respuesta de fallo de validacion.
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected function validateFailed($messages=null) {
+    protected function validateFailed($messages=null) : JsonResponse {
         return response()->json([
             'code' => 422,
             'message' => $messages ?: 'Fallo la validacion de los datos'
@@ -59,8 +65,9 @@ trait Responses {
 
     /**
      * Metodo de respuesta de listado.
+     * @return \Illuminate\Http\JsonResponse
      */
-    protected function listResponse($rows) {
+    protected function listResponse($rows) : JsonResponse {
         $response = [
             'code' => 200,
             'message' => null,

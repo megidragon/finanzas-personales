@@ -26,10 +26,18 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::post('currency', 'CurrencyController@store');
         Route::put('currency/{id}', 'CurrencyController@update');
         Route::delete('currency/{id}', 'CurrencyController@delete');
+
+        Route::get('client', 'ClientController@list');
+        Route::post('client', 'ClientController@store');
+        Route::get('client/{id}', 'ClientController@details');
+        Route::put('client/{id}', 'ClientController@update');
+        Route::delete('client/{id}', 'ClientController@delete');
+        Route::put('client/{id}/profile', 'ClientController@upload');
+
+        
     });
   });
 
 Route::fallback(function(){
-    return response()->json([
-        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+    return response()->json(['message' => 'Page Not Found.'], 404);
 });

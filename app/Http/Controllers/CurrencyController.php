@@ -18,7 +18,7 @@ class CurrencyController extends Controller
     {
         $rows = Currencies::all();
         
-        return self::listResponse($rows);
+        return $this->listResponse($rows);
     }
 
     /**
@@ -29,7 +29,7 @@ class CurrencyController extends Controller
         // Validaciones correspondientes
         if (isset($request->validator) && $request->validator->fails())
         {
-            return $this->validateFailed($request);
+            return $this->validateFailed($request->validator->errors());
         }
 
         $row = Currencies::create([
@@ -37,7 +37,7 @@ class CurrencyController extends Controller
             'symbol' => $request->symbol
         ])->fresh();
         
-        return self::storeSuccess($row);
+        return $this->storeSuccess($row);
     }
 
     /**
@@ -50,24 +50,24 @@ class CurrencyController extends Controller
         // Validaciones correspondientes
         if (isset($request->validator) && $request->validator->fails())
         {
-            return $this->validateFailed($request->validator->messages());
+            return $this->validateFailed($request->validator->errors());
         } 
         elseif (!$currency || $currency->trashed()) 
         {
             return $this->validateFailed('No se encontro el id solicitado');
         }
 
-        $currency->name = $request->name;
-        $currency->symbol = $request->symbol;
-        $currency->save();
+        $input = $request->only(['name', 'symbol']);
 
-        return self::updateSuccess();
+        $currency->fill($input)->save();
+
+        return $this->updateSuccess($currency->fresh());
     }
 
     /**
      * Borrado de moneda
      */
-    protected function delete(Request $request, $id) 
+    protected function delete($id) 
     {
         $currency = Currencies::find($id);
         if (!$currency || $currency->trashed()) 

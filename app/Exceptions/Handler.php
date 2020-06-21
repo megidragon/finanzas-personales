@@ -51,16 +51,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof ModelNotFoundException) {
-            return response()->json([
-                'error' => 'Entry for '.str_replace('App\\', '', $exception->getModel()).' not found'], 404);
-        }
-        
+        $request->headers->set('Accept', 'application/json');
+
         return parent::render($request, $exception);
-        return response()->json([
-            'code' => 500,
-            'message' => $exception->getMessage()
-        ]);
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)

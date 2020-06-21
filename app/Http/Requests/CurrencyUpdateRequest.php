@@ -31,18 +31,15 @@ class CurrencyUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:254',
-            'symbol' => 'required|string|max:254|unique:currencies,symbol,$id,id'
+            'name' => 'string|max:254',
+            'symbol' => 'string|max:254|unique:currencies,symbol,$id,id'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => ':attribute es obligatorio.',
             'name.max' => ':attribute debe ser menor a 254 caracteres.',
-            'name.unique' => ':attribute no puede ser repetido.',
-            'symbol.required' => ':attribute es obligatorio.',
             'symbol.max' => ':attribute debe ser menor a 254 caracteres.',
             'symbol.unique' => ':attribute no puede ser repetido.',
         ];

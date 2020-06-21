@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CurrencyCreateRequest extends FormRequest
+class ClientUpdateRequest extends FormRequest
 {
     public $validator = null;
 
@@ -31,19 +31,21 @@ class CurrencyCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:254',
-            'symbol' => 'required|string|max:254|unique:currencies,symbol'
+            'email' => 'string|min:7|max:254|unique:users',
+            'full_name' => 'string|max:254',
+            'birth_at' => 'date'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => ':attribute es obligatorio.',
-            'name.max' => ':attribute debe ser menor a 254 caracteres.',
-            'symbol.required' => ':attribute es obligatorio.',
-            'symbol.max' => ':attribute debe ser menor a 254 caracteres.',
-            'symbol.unique' => ':attribute no puede ser repetido.',
+            'email.max' => ':attribute debe ser menor a 254 caracteres.',
+            'email.min' => ':attribute debe ser mayor a 7 caracteres.',
+            'email.unique' => ':attribute ya fue tomado.',
+            'full_name.required' => ':attribute es obligatorio.',
+            'full_name.max' => ':attribute debe ser menor a 254 caracteres.',
+            'birth_at.date' => ':attribute debe ser una fecha en formato YYYY-MM-DD',
         ];
     }
 }
