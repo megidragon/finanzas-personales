@@ -16,5 +16,11 @@ class TestUsersSeeder extends Seeder
             'password' => Hash::make('test'),
             'is_admin' => true,
         ]);
+
+        DB::table('users')->insert([
+            'email' => 'client@finanzas.com',
+            'password' => Hash::make('test'),
+            'is_admin' => false,
+        ]);
     }
 }

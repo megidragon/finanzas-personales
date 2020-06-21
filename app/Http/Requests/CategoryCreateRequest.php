@@ -20,7 +20,7 @@ class CategoryCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->is_admin;
+        return true;
     }
 
     /**
@@ -31,9 +31,7 @@ class CategoryCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:254',
-            'client_id' => 'required|integer|max:10',
-            'type' => 'required|in:deposit,spending',
+            'name' => 'required|string|max:254'
         ];
     }
 
@@ -42,10 +40,6 @@ class CategoryCreateRequest extends FormRequest
         return [
             'name.required' => ':attribute es obligatorio.',
             'name.max' => ':attribute debe ser menor a 254 caracteres.',
-            'client_id.required' => ':attribute es obligatorio.',
-            'client_id.max' => ':attribute debe ser menor a 10 digitos.',
-            'type.required' => ':attribute es obligatorio.',
-            'type.in' => ':attribute debe ser "deposit" o "spending".',
         ];
     }
 }

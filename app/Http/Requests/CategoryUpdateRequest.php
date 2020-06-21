@@ -20,7 +20,7 @@ class CategoryUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->is_admin;
+        return true;
     }
 
     /**
@@ -31,8 +31,7 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|max:254',
-            'type' => 'in:deposit,spending',
+            'name' => 'string|max:254'
         ];
     }
 
@@ -40,7 +39,6 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             'name.max' => ':attribute debe ser menor a 254 caracteres.',
-            'type.in' => ':attribute debe ser "deposit" o "spending".',
         ];
     }
 }

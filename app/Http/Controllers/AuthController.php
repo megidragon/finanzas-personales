@@ -6,32 +6,7 @@ use Carbon\Carbon;
 use App\User;
 
 class AuthController extends Controller
-{
-    /**
-     * Create user
-     *
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [string] password_confirmation
-     * 
-     * @return [string] message
-     */
-    public function signup(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
-        ]);
-        $user = new User([
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
-        $user->save();
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
-    }
-  
+{  
     /**
      * Login user and create token
      *

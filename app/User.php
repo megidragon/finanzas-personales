@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Clients');
     }
+
+    /**
+     * @param int $id Id del usuario
+     * 
+     * @return int
+     */
+    public static function clientId($id)
+    {
+        return (new self)->with('client')->find($id)->client->id;
+    }
 }

@@ -62,7 +62,6 @@ class Initialization extends Migration
                 $table->id();
                 $table->string('name');
                 $table->unsignedBigInteger('client_id')->nullable();
-                $table->enum('type', ['deposit', 'spending']);
                 $table->timestamps();
                 $table->softDeletes();
             });
@@ -79,10 +78,12 @@ class Initialization extends Migration
                 $table->string('title');
                 $table->longText('description')->nullable();
                 $table->float('amount');
+                $table->enum('type', ['deposit', 'spending']);
                 $table->unsignedBigInteger('category_id');
                 $table->unsignedBigInteger('client_id');
                 $table->unsignedBigInteger('currency_id');
                 $table->timestamps();
+                $table->softDeletes();
             });
 
             Schema::table('movements', function(Blueprint $table) {
