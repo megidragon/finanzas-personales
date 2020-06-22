@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('balance', 'ClientMovementController@getBalance');
         Route::get('daily-expenses', 'ClientMovementController@dailyExpensesReport');
         Route::get('category-expenses', 'ClientMovementController@categoryExpensesReport');
+        Route::get('projection-expenditure', 'ClientMovementController@projectionExpenditureReport');
 
         Route::get('movement', 'ClientMovementController@list');
         Route::post('movement', 'ClientMovementController@newMovement');

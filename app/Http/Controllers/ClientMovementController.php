@@ -56,6 +56,15 @@ class ClientMovementController extends Controller
         $expenses = MovementRepository::categoryExpenseReport($request->year, $request->month);
         return $this->listResponse(['expenses' => $expenses]);
     }
+    
+    /**
+     * Obtiene balance del cliente
+     */
+    public function projectionExpenditureReport()
+    {
+        $projection = MovementRepository::projectionExpenditureReport();
+        return $this->listResponse(['projection' => $projection]);
+    }
 
     /**
      * Crea nuevo movimiento

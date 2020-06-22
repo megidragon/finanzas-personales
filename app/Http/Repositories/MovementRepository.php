@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Resources\MovementBalanceResource;
 use App\Http\Resources\MovementExpensesResource;
 use App\Http\Resources\MovementCategoryExpensesResource;
+use App\Http\Resources\MovementprojectionExpenditureResource;
 
 class MovementRepository
 {
@@ -59,7 +60,7 @@ class MovementRepository
         // Laravel no soporta acumulados asi que se hace manual
         $balance = Movements::ownedByClient($client_id)
                         ->select(
-                            \DB::raw("DATE_FORMAT(movements.created_at, '%Y-%m-%d') AS 'date_at'"),
+                            \DB::raw("DATE_FORMAT(movements.created_at, '%d/%m/%Y') AS 'date_at'"),
                             \DB::raw("ROUND($spending_subquery, 2) AS 'expenses'"),
                             \DB::raw("ROUND($balance_subquery, 2) AS 'balance'"),
                             'currency_id'
@@ -84,7 +85,7 @@ class MovementRepository
         $client_id = User::clientId(auth()->id());
         $expenses = Movements::ownedByClient($client_id)
                         ->select(
-                            \DB::raw("DATE_FORMAT(movements.created_at, '%Y-%m-%d') AS 'date_at'"),
+                            \DB::raw("DATE_FORMAT(movements.created_at, '%d/%m/%Y') AS 'date_at'"),
                             \DB::raw("ROUND(SUM(amount), 2) AS 'expense'"),
                             'currency_id'
                         )
@@ -128,5 +129,27 @@ class MovementRepository
                         ->groupBy('category_id', 'currency_id')
                         ->get();
         return new MovementCategoryExpensesResource($expenses);
+    }
+    
+    /**
+     * Obtiene los gastos agrupados por categoria
+     * 
+     * @param int $year Año numerico entre 1950 y 2500
+     * @param int $month Año numerico entre 1-12
+     */
+    public static function projectionExpenditureReport()
+    {
+        $client_id = User::clientId(auth()->id());
+        $expenses = Movements::ownedByClient($client_id)
+                        ->select(
+                            'currency_id',
+                            \DB::raw("ROUND(SUM(amount), 2) AS 'expense'"),
+                            \DB::raw("DATE_FORMAT(created_at, '%Y-%m') AS 'date_at'")
+                        )
+                        ->with(['currency'])
+                        ->where('type', \Config::get('constants.SPENDING_KEY'))
+                        ->groupBy('currency_id', 'date_at')
+                        ->get();
+        return new MovementprojectionExpenditureResource($expenses);
     }
 }
