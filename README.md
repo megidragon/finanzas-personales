@@ -6,6 +6,15 @@
 Proyecto de pruebas desarrollado en laravel 7 y php 7.2
 El proyecto se levanta mediante docker, o puede levantarse manualmente.
 
+### Documentacion
+Documentacion de la api con postman: https://documenter.getpostman.com/view/2055443/SzzobGRS
+
+Importar coleccion de postman: https://www.getpostman.com/collections/694aaaf4734a3e67fa1c
+Al importar coleccion debe configurar las varaibles de entorno de postman, las cuales son:
+-admin_token (Se obtiene al logearse con un usuario admin)
+-client_token (Se obtiene al logearse con un usuario cliente)
+-url
+
 ### Pasos de instalacion por docker (Requiere tener instalado docker y docker compose)
 - Docker https://docs.docker.com/engine/install/#server
 - Docker compose https://docs.docker.com/compose/install/
@@ -49,3 +58,14 @@ Para correrlo en servidor se necesita asignar permisos
 sudo chgrp -R www-data storage bootstrap/cache
 sudo chmod -R ug+rwx storage bootstrap/cache
 ```
+
+
+### Datos de prueba
+
+Usuario administrador:
+email: admin@finanzas.com
+pass: test
+
+Usuario cliente
+email: client@finanzas.com
+pass: test
