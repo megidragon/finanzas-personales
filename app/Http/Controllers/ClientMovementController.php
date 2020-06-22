@@ -91,8 +91,13 @@ class ClientMovementController extends Controller
     /**
      * Listado de movimientos del cliente
      */
-    protected function list() 
+    protected function list(Request $request) 
     {
+        $request->validate([
+            'month' => 'numeric|min:0|max:12',
+            'year' => 'numeric|min:1950|max:2500',
+        ]);
+
         $rows = MovementRepository::getMovements();
         
         return $this->listResponse($rows);

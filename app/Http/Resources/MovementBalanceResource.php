@@ -29,9 +29,14 @@ class MovementBalanceResource extends ResourceCollection
             {
                 $dates[$row['date_at']]['expenses'] = [];
             }
+            if (!isset($dates[$row['date_at']]['deposits']))
+            {
+                $dates[$row['date_at']]['deposits'] = [];
+            }
 
             $dates[$row['date_at']]['balance'][$row['currency']['symbol']] = $row['balance'];
             $dates[$row['date_at']]['expenses'][$row['currency']['symbol']] = $row['expenses'];
+            $dates[$row['date_at']]['deposits'][$row['currency']['symbol']] = $row['deposits'];
         }
 
         return $dates;
