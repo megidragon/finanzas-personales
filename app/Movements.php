@@ -16,8 +16,11 @@ class Movements extends Model
         'type', 
         'category_id',
         'client_id',
-        'currency_id'
+        'currency_id',
+        'created_at'
     ];
+
+    protected $hidden = ['client_id'];
 
     /**
      * Relacion a categoria
@@ -40,6 +43,14 @@ class Movements extends Model
      */
     public function currency()
     {
-        return $this->belongsTo('App\Currencies', 'currency_id ');
+        return $this->belongsTo('App\Currencies', 'currency_id');
+    }
+
+    /**
+     * Scope para datos del cliente
+     */
+    public function scopeOwnedByClient($query, $client_id)
+    {
+        return $query->where('client_id', $client_id);
     }
 }

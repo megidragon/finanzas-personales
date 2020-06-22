@@ -6,12 +6,13 @@ use App\Http\Requests\CategoryUpdateRequest;
 
 use Illuminate\Http\Request;
 use App\Helpers\Responses;
+use App\Helpers\ValidationHelper;
 use App\Categories;
 use App\User;
 
 class CategoryController extends Controller
 {
-    use Responses;
+    use Responses, ValidationHelper;
 
     /**
      * Listado de categorias
@@ -39,7 +40,7 @@ class CategoryController extends Controller
     protected function storeCategory(CategoryCreateRequest $request) 
     {
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
         }
@@ -58,7 +59,7 @@ class CategoryController extends Controller
     protected function storeClientCategory(CategoryCreateRequest $request) 
     {
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
         }
@@ -79,15 +80,15 @@ class CategoryController extends Controller
      */
     protected function update(CategoryUpdateRequest $request, $id) 
     {
-        $client_id = auth()->user()->is_admin ? null : User::clientId(auth()->id());
-        $category = Categories::where('client_id', $client_id)->find($id);
-
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
-        } 
-        elseif (!$category || $category->trashed()) 
+        }
+        
+        $client_id = auth()->user()->is_admin ? null : User::clientId(auth()->id());
+        $category = Categories::where('client_id', $client_id)->find($id);
+        if (!$category || $category->trashed()) 
         {
             return $this->validateFailed('No se encontro el id solicitado');
         }

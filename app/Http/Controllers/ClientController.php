@@ -6,18 +6,29 @@ use App\Http\Requests\ClientUpdateRequest;
 
 use Illuminate\Http\Request;
 use App\Helpers\Responses;
+use App\Helpers\ValidationHelper;
 use App\User;
 use App\Clients;
 
 class ClientController extends Controller
 {
-    use Responses;
+    use Responses, ValidationHelper;
 
     /**
      * Detalles de clientes
      */
     protected function details($id) 
     {
+        
+        if (!auth()->user()->is_admin)
+        {
+            $client_id = User::clientId(auth()->id());
+            if ($client_id != $id)
+            {
+                return response()->json(['message' => 'unauthorized.'], 401);
+            }
+        }
+
         $rows = Clients::with(['user', 'categories'])->find($id);
         
         return $this->listResponse($rows);
@@ -39,7 +50,7 @@ class ClientController extends Controller
     protected function store(ClientCreateRequest $request) 
     {
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
         }
@@ -66,14 +77,14 @@ class ClientController extends Controller
      */
     protected function update(ClientUpdateRequest $request, $id) 
     {
-        $client = Clients::find($id);
-
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
-        } 
-        elseif (!$client || $client->trashed()) 
+        }
+        
+        $client = Clients::find($id);
+        if (!$client || $client->trashed()) 
         {
             return $this->validateFailed('No se encontro el id solicitado');
         }

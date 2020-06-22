@@ -8,7 +8,6 @@ Route::group(['prefix' => 'auth'], function () {
      * Acceso libre
      */
     Route::post('login', 'AuthController@login');
-    Route::post('signup', 'AuthController@signup');
   
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'AuthController@logout');
@@ -52,11 +51,16 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::post('category', 'CategoryController@storeClientCategory');
         Route::put('category/{id}', 'CategoryController@update');
         Route::delete('category/{id}', 'CategoryController@delete');
-
+        
         // Rutas de movimientos
         Route::get('balance', 'ClientMovementController@getBalance');
-        Route::post('deposit', 'ClientMovementController@newDeposit');
-        Route::post('spending', 'ClientMovementController@spending');
+        Route::get('daily-expenses', 'ClientMovementController@dailyExpensesReport');
+        Route::get('category-expenses', 'ClientMovementController@categoryExpensesReport');
+
+        Route::get('movement', 'ClientMovementController@list');
+        Route::post('movement', 'ClientMovementController@newMovement');
+        Route::put('movement/{id}', 'ClientMovementController@update');
+        Route::delete('movement/{id}', 'ClientMovementController@delete');
     });
 });
 

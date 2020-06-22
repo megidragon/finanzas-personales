@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CurrencyCreateRequest;
 use App\Http\Requests\CurrencyUpdateRequest;
 use App\Helpers\Responses;
+use App\Helpers\ValidationHelper;
 use App\Currencies;
 
 class CurrencyController extends Controller
 {
-    use Responses;
+    use Responses, ValidationHelper;
 
     /**
      * Listado de monedas
@@ -27,7 +28,7 @@ class CurrencyController extends Controller
     protected function store(CurrencyCreateRequest $request) 
     {
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
         }
@@ -45,14 +46,14 @@ class CurrencyController extends Controller
      */
     protected function update(CurrencyUpdateRequest $request, $id) 
     {
-        $currency = Currencies::find($id);
-
         // Validaciones correspondientes
-        if (isset($request->validator) && $request->validator->fails())
+        if (!$this->checkValidation($request))
         {
             return $this->validateFailed($request->validator->errors());
-        } 
-        elseif (!$currency || $currency->trashed()) 
+        }
+        
+        $currency = Currencies::find($id);
+        if (!$currency || $currency->trashed()) 
         {
             return $this->validateFailed('No se encontro el id solicitado');
         }
