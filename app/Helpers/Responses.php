@@ -60,7 +60,7 @@ trait Responses {
         return response()->json([
             'code' => 422,
             'message' => $messages ?: 'Fallo la validacion de los datos'
-        ]);
+        ], 422);
     }
 
     /**

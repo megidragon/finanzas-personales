@@ -117,7 +117,7 @@ class MovementRepository
     /**
      * Obtiene los movimientos de la base de datos
      */
-    public static function getMovements()
+    public static function getMovements($year, $month)
     {
         $client_id = User::clientId(auth()->id());
         $rows = Movements::ownedByClient($client_id)
@@ -129,6 +129,8 @@ class MovementRepository
                             'category_id',
                             'currency_id'
                         )
+                        ->whereYear('created_at', '=', $year)
+                        ->whereMonth('created_at', '=', $month)
                         ->get();
         return new MovementListResource($rows);
     }

@@ -17,18 +17,25 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 Route::group(['middleware' => 'auth:api'], function() {
+    // Rutas generales de usuario logeado
+    Route::get('client', 'ClientController@list');
+
+    Route::get('currency', 'CurrencyController@list');
+
+    Route::get('category', 'CategoryController@list');
+    Route::put('category/{id}', 'CategoryController@update');
+    Route::delete('category/{id}', 'CategoryController@delete');
+
     /**
      * Acceso administrador
      */
     Route::group(['middleware' => 'is_admin'], function() {
         // Rutas de monedas
-        Route::get('currency', 'CurrencyController@list');
         Route::post('currency', 'CurrencyController@store');
         Route::put('currency/{id}', 'CurrencyController@update');
         Route::delete('currency/{id}', 'CurrencyController@delete');
 
         // Rutas de clientes
-        Route::get('client', 'ClientController@list');
         Route::post('client', 'ClientController@store');
         Route::get('client/{id}', 'ClientController@details');
         Route::put('client/{id}', 'ClientController@update');
@@ -36,10 +43,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::put('client/{id}/profile', 'ClientController@upload');
 
         // Rutas de categorias
-        Route::get('category', 'CategoryController@list');
         Route::post('category', 'CategoryController@storeCategory');
-        Route::put('category/{id}', 'CategoryController@update');
-        Route::delete('category/{id}', 'CategoryController@delete');
     });
 
     Route::group(['middleware' => 'is_client'], function() {
@@ -47,10 +51,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('client/{id}', 'ClientController@details');
         
         // Rutas de Categorias
-        Route::get('category', 'CategoryController@list');
         Route::post('category', 'CategoryController@storeClientCategory');
-        Route::put('category/{id}', 'CategoryController@update');
-        Route::delete('category/{id}', 'CategoryController@delete');
         
         // Rutas de movimientos
         Route::get('balance', 'ClientMovementController@getBalance');

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(TestUsersSeeder::class);
-        $this->call(BasicDataSeed::class);
+        $this->call(BasicDataSeeder::class);
 
         factory(Movements::class, 600)->create();
     }

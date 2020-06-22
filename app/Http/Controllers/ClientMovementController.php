@@ -94,11 +94,11 @@ class ClientMovementController extends Controller
     protected function list(Request $request) 
     {
         $request->validate([
-            'month' => 'numeric|min:0|max:12',
-            'year' => 'numeric|min:1950|max:2500',
+            'month' => 'required|numeric|min:0|max:12',
+            'year' => 'required|numeric|min:1950|max:2500',
         ]);
 
-        $rows = MovementRepository::getMovements();
+        $rows = MovementRepository::getMovements($request->year, $request->month);
         
         return $this->listResponse($rows);
     }

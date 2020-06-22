@@ -1,8 +1,8 @@
 FROM php:7.2-apache
 
 RUN apt-get update \
- && apt-get install -y vim nano git zlib1g-dev mariadb-client libzip-dev \
- && docker-php-ext-install zip mysqli pdo_mysql \
+ && apt-get install -y vim nano git zlib1g-dev mariadb-client sqlite libzip-dev \
+ && docker-php-ext-install zip mysqli pdo_mysql sqlite3 \
  && pecl install xdebug \
  && docker-php-ext-enable xdebug \
  && echo 'xdebug.remote_enable=on' >> /usr/local/etc/php/conf.d/xdebug.ini \
