@@ -27,13 +27,14 @@ class MovementprojectionExpenditureResource extends ResourceCollection
         {
             if (!isset($count_dates_per_currency[$row['currency']['symbol']]))
             {
+
                 $count_dates_per_currency[$row['currency']['symbol']] = 0;
             }
+            $count_dates_per_currency[$row['currency']['symbol']] ++;
 
             if (!isset($dates[$row['date_at']]))
             {
                 $dates[$row['date_at']] = [];
-                $count_dates_per_currency[$row['currency']['symbol']] ++;
             }
             
             // Añade el valor del mes de la moneda de la lista de fechas
