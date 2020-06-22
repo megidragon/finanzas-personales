@@ -4530,6 +4530,7 @@ return array(
     'Tests\\CreatesApplication' => $baseDir . '/tests/CreatesApplication.php',
     'Tests\\Feature\\CategoryTest' => $baseDir . '/tests/Feature/CategoryTest.php',
     'Tests\\Feature\\CurrencyTest' => $baseDir . '/tests/Feature/CurrencyTest.php',
+    'Tests\\Feature\\MovementTest' => $baseDir . '/tests/Feature/MovementTest.php',
     'Tests\\TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'TheSeer\\Tokenizer\\Exception' => $vendorDir . '/theseer/tokenizer/src/Exception.php',

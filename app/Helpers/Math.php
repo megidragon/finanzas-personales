@@ -17,6 +17,7 @@ trait Math {
      */
     public function linearExtrapolation($y1, $x2, $y2, $x3) : float
     {
+        //dd($y1, $x2, $y2, $x3);
         $n = $y1;
         
         $m = ($y2 - $y1) / $x2;

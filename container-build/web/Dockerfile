@@ -1,8 +1,10 @@
 FROM php:7.2-apache
 
+WORKDIR /var/www
+
 RUN apt-get update \
  && apt-get install -y vim nano git zlib1g-dev mariadb-client sqlite libzip-dev \
- && docker-php-ext-install zip mysqli pdo_mysql sqlite3 \
+ && docker-php-ext-install zip mysqli pdo_mysql \
  && pecl install xdebug \
  && docker-php-ext-enable xdebug \
  && echo 'xdebug.remote_enable=on' >> /usr/local/etc/php/conf.d/xdebug.ini \
@@ -14,4 +16,4 @@ RUN apt-get update \
   | php -- --install-dir=/usr/local/bin --filename=composer \
  && echo "AllowEncodedSlashes On" >> /etc/apache2/apache2.conf
 
-WORKDIR /var/www
+#WORKDIR /var/www

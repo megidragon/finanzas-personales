@@ -5081,6 +5081,7 @@ class ComposerStaticInit47c973b27e5c6edc2becace8e025910b
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
         'Tests\\Feature\\CategoryTest' => __DIR__ . '/../..' . '/tests/Feature/CategoryTest.php',
         'Tests\\Feature\\CurrencyTest' => __DIR__ . '/../..' . '/tests/Feature/CurrencyTest.php',
+        'Tests\\Feature\\MovementTest' => __DIR__ . '/../..' . '/tests/Feature/MovementTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
